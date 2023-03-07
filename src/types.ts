@@ -4,7 +4,7 @@ export type Starship = {
   attributes: Attribute[]
 }
 
-export type StarshipWithWinnings = Starship & {
+export type Player = Starship & {
   wins: number
 }
 
