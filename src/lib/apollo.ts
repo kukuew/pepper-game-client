@@ -8,7 +8,9 @@ function createApolloClient() {
         'X-Api-Key': import.meta.env.VITE_GRAPHQL_API_KEY
       }
     }),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache({
+      addTypename: false
+    })
   })
 }
 
