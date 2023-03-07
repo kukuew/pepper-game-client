@@ -16,8 +16,11 @@ const initializePlayers = (starships: Starship[]): Player[] => {
 const Game: React.FC<Props> = ({ starships }) => {
   const [players, setPlayers] = useState<Player[]>(() => initializePlayers(starships))
   const [winner, setWinner] = useState<Player | null>(null)
+  const areEnoughPlayers = players.length > 1
 
   const play = () => {
+    if (!areEnoughPlayers) return
+
     const shuffledPlayers = shuffleArray([...players])
     const winner = getWinner(shuffledPlayers[0], shuffledPlayers[1])
 
@@ -48,16 +51,23 @@ const Game: React.FC<Props> = ({ starships }) => {
   return (
     <Stack alignItems="center" p={5}>
       <Typography variant="h4" component="h2" mb={10}>
-        {winner ? `${winner.name} is winning!` : 'The game ended in a draw :)'}
+        {!areEnoughPlayers && 'Not enough players :('}
+        {areEnoughPlayers && (winner ? `${winner.name} is winning!` : 'The game ended in a draw :)')}
       </Typography>
-      <Stack direction="row" alignItems="center" mb={10}>
-        <PlayerCard player={players[0]} />
-        <Typography variant="h3" component="p" mx={5}>VS</Typography>
-        <PlayerCard player={players[1]} />
-      </Stack>
-      <Button variant="contained" onClick={play}>
-        Play!
-      </Button>
+      {areEnoughPlayers && (
+        <>
+          <Stack direction="row" alignItems="center" mb={10}>
+            <PlayerCard player={players[0]} />
+            <Typography variant="h3" component="p" mx={5}>
+              VS
+            </Typography>
+            <PlayerCard player={players[1]} />
+          </Stack>
+          <Button variant="contained" onClick={play}>
+            Play!
+          </Button>
+        </>
+      )}
     </Stack>
   )
 }
