@@ -10,7 +10,7 @@ const PlayerCard: React.FC<Props> = ({ player }) => {
   return (
     <Card data-testid="player-card">
       <Stack p={2} width={200}>
-        <Typography textAlign="center" variant="h5" component="p" mb={3}>
+        <Typography textAlign="center" variant="h5" component="p" mb={3} data-testid="player-card-title">
           {player.name}
         </Typography>
         <Stack>
