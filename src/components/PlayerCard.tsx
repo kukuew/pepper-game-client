@@ -8,7 +8,7 @@ interface Props {
 
 const PlayerCard: React.FC<Props> = ({ player }) => {
   return (
-    <Card>
+    <Card data-testid="player-card">
       <Stack p={2} width={200}>
         <Typography textAlign="center" variant="h5" component="p" mb={3}>
           {player.name}
@@ -33,7 +33,7 @@ const PlayerCard: React.FC<Props> = ({ player }) => {
           <Divider>
             <Typography>Winnings</Typography>
           </Divider>
-          <Typography textAlign="center">{player.wins}</Typography>
+          <Typography textAlign="center" data-testid="player-winnings">{player.wins}</Typography>
         </Stack>
       </Stack>
     </Card>

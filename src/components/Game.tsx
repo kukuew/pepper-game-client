@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { shuffleArray } from '../lib/shuffleArray'
 import { getWinner } from '../lib/getWinner'
 import { Player, Starship } from '../types'
-import PlayerCard from './PlayerCard'
+import GameBoard from './GameBoard'
 
 interface Props {
   starships: Starship[]
@@ -29,10 +29,6 @@ const Game: React.FC<Props> = ({ starships }) => {
   }
 
   useEffect(() => {
-    play()
-  }, [])
-
-  useEffect(() => {
     if (!winner) return
 
     setPlayers(prevPlayers => {
@@ -50,24 +46,11 @@ const Game: React.FC<Props> = ({ starships }) => {
 
   return (
     <Stack alignItems="center" p={5}>
-      <Typography variant="h4" component="h2" mb={10}>
+      <Typography variant="h4" component="h2" mb={10} data-testid="game-title">
         {!areEnoughPlayers && 'Not enough players :('}
         {areEnoughPlayers && (winner ? `${winner.name} is winning!` : 'The game ended in a draw :)')}
       </Typography>
-      {areEnoughPlayers && (
-        <>
-          <Stack direction="row" alignItems="center" mb={10}>
-            <PlayerCard player={players[0]} />
-            <Typography variant="h3" component="p" mx={5}>
-              VS
-            </Typography>
-            <PlayerCard player={players[1]} />
-          </Stack>
-          <Button variant="contained" onClick={play}>
-            Play!
-          </Button>
-        </>
-      )}
+      {areEnoughPlayers && <GameBoard player1={players[0]} player2={players[1]} play={play} />}
     </Stack>
   )
 }
